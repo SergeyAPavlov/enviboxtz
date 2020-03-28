@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
+use App\Model\ConcreteFeedback;
 class CreateFeedbackTable extends Migration
 {
     /**
@@ -13,14 +12,8 @@ class CreateFeedbackTable extends Migration
      */
     public function up()
     {
-        Schema::create('feedback', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('phone');
-            $table->string('text');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        $feedback = new ConcreteFeedback();
+        $feedback->createModel();
     }
 
     /**
@@ -30,6 +23,6 @@ class CreateFeedbackTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('feedbacks');
     }
 }
