@@ -11,79 +11,83 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
         <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
+            #app, #form  li {
+                 font-size: 2em;
+                 margin-top: 20px;
+                 margin-left: 200px;
+             }
+            #form {
+                margin-left: 200px;
+                margin-right: 200px;
+            }
+            #app ul {
+                margin-top: 50px;
             }
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
         </style>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    тут будет форма обратной связи
-                </div>
-
-
+        <div>
+            <div id="form" class="container">
+                <form  role="form" class="form">
+                    <ul>
+                        <li><input v-model="name" placeholder="имя"></li>
+                        <li><input v-model="phone" placeholder="телефон"></li>
+                        <li><textarea class="form-control" rows="5" v-model="text" placeholder="сообщение"></textarea></li>
+                    </ul>
+                    <button id="post" type="button" class="btn btn-primary" style="margin-left: 200px" @click.prevent="submitBid">POST</button>
+                </form>
             </div>
+            @verbatim
         </div>
+
+
+        <div id="app">
+            <ul>
+                <li v-for="item in info.data" :key="info.data.id">
+                    {{ item.id }} {{ item.name }} {{ item.phone }}  {{ item.text }}
+                </li>
+            </ul>
+
+        </div>
+            @endverbatim
+
+
+        <script>
+            var listItems = new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        info: null
+                    };
+                },
+                mounted() {
+                    axios
+                        .get('/ajax')
+                        .then(response => (this.info = response));
+                }
+            });
+
+            var form = new Vue({
+                el: '#form',
+                data: {
+                    name: null,
+                    phone: null,
+                    text: null
+                },
+                methods: {
+                    submitBid() {
+                        alert(this.text);
+                    }
+                }
+            }
+            );
+
+        </script>
     </body>
 </html>

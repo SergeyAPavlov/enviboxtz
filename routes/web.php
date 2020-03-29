@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('/feedback', 'FeedbackController');
+
+Route::resource('/ajax', 'FeedbackAjaxController',['only' => ['index', 'store']]);
