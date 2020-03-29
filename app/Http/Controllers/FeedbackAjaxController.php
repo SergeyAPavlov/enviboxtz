@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\FeedbackFactory;
 use Illuminate\Http\Request;
-use App\Model\ConcreteFeedback;
 
 class FeedbackAjaxController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @param ConcreteFeedback $feedback
      * @return \Illuminate\Http\Response
      */
-    public function index(ConcreteFeedback $feedback)
+    public function index()
     {
+        $feedback = FeedbackFactory::getFeedback();
         $all = $feedback->getAllFeedbacks()->all();
         return json_encode($all);
     }
@@ -31,12 +31,12 @@ class FeedbackAjaxController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ConcreteFeedback $feedback
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, ConcreteFeedback $feedback)
+    public function store(Request $request)
     {
+        $feedback = FeedbackFactory::getFeedback();
         $this->validate($request, [
             'name' => 'required',
             'phone'=> 'required|digits:10',
