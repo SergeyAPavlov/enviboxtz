@@ -38,6 +38,7 @@ class FeedbackAjaxController extends Controller
     public function store(Request $request, ConcreteFeedback $feedback)
     {
         $input = $request->all();
+        $save = $feedback->saveFeedback($input);
         return response(json_encode($input), 200);
     }
 

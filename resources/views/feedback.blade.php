@@ -82,7 +82,13 @@
                 },
                 methods: {
                     submitBid() {
-                        alert(this.text);
+
+                        const formData = new FormData();
+                        formData.append('name', this.name);
+                        formData.append('phone', this.phone);
+                        formData.append('text', this.text);
+                        axios.post('/ajax', formData)
+                            .then(console.log.request);
                     }
                 }
             }
