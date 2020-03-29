@@ -32,6 +32,7 @@
 
     </head>
     <body>
+    <div id="all">
         <div>
             <div id="form" class="container">
                 <form  role="form" class="form">
@@ -50,35 +51,29 @@
         <div id="app">
             <ul>
                 <li v-for="item in info.data" :key="info.data.id">
-                    {{ item.id }} {{ item.name }} {{ item.phone }}  {{ item.text }}
+                    {{ item.name }} {{ item.phone }}  {{ item.text }}
                 </li>
             </ul>
 
         </div>
             @endverbatim
-
+    </div>
 
         <script>
             var listItems = new Vue({
-                el: '#app',
+                el: '#all',
                 data() {
                     return {
-                        info: null
+                        info: null,
+                        name: null,
+                        phone: null,
+                        text: null
                     };
                 },
                 mounted() {
                     axios
                         .get('/ajax')
                         .then(response => (this.info = response));
-                }
-            });
-
-            var form = new Vue({
-                el: '#form',
-                data: {
-                    name: null,
-                    phone: null,
-                    text: null
                 },
                 methods: {
                     submitBid() {
@@ -88,11 +83,13 @@
                         formData.append('phone', this.phone);
                         formData.append('text', this.text);
                         axios.post('/ajax', formData)
-                            .then(console.log.request);
-                    }
+                            .then(axios
+                                .get('/ajax')
+                                .then(response => (this.info = response)));
+                    },
                 }
-            }
-            );
+
+            });
 
         </script>
     </body>
