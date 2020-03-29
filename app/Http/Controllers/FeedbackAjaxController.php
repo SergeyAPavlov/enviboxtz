@@ -37,6 +37,11 @@ class FeedbackAjaxController extends Controller
      */
     public function store(Request $request, ConcreteFeedback $feedback)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'phone'=> 'required|digits:10',
+            'text' => 'required'
+        ]);
         $input = $request->all();
         $save = $feedback->saveFeedback($input);
         return response(json_encode($input), 200);

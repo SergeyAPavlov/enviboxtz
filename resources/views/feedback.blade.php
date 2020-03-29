@@ -38,7 +38,7 @@
                 <form  role="form" class="form">
                     <ul>
                         <li><input v-model="name" placeholder="имя"></li>
-                        <li><input v-model="phone" placeholder="телефон"></li>
+                        <li><input v-model="phone" placeholder="телефон, 10 цифр"></li>
                         <li><textarea class="form-control" rows="5" v-model="text" placeholder="сообщение"></textarea></li>
                     </ul>
                     <button id="post" type="button" class="btn btn-primary" style="margin-left: 200px" @click.prevent="submitBid">POST</button>
